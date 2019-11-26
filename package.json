@@ -1,0 +1,19 @@
+{
+  "name": "raptor",
+  "version": "1.0.0",
+  "description": "MERN Stack web framework",
+  "main": "server.js",
+  "scripts": {
+    "start": "node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sankarancms/raptor.git"
+  },
+  "author": "CMS",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sankarancms/raptor/issues"
+  },
+  "homepage": "https://github.com/sankarancms/raptor#readme"
+}
