@@ -2,9 +2,10 @@
   "name": "raptor",
   "version": "1.0.0",
   "description": "MERN Stack web framework",
-  "main": "server.js",
+  "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js"
+    "start": "node src/server.js",
+    "server": "nodemon"
   },
   "repository": {
     "type": "git",
@@ -15,5 +16,11 @@
   "bugs": {
     "url": "https://github.com/sankarancms/raptor/issues"
   },
-  "homepage": "https://github.com/sankarancms/raptor#readme"
+  "homepage": "https://github.com/sankarancms/raptor#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.1"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
