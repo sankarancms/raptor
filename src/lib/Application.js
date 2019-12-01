@@ -1,5 +1,6 @@
 "use strict"
 const express = require('express');
+const open = require('open');
 const Setup = require('./Setup');
 const router = require('../routes');
 
@@ -23,7 +24,7 @@ class Application {
      * Initialize the appliation.
      */
     init() {
-        console.log('Application initializing.');
+        log.default('Application initializing');
         this.app = this.setup.router('/', router);
     }
 
@@ -38,13 +39,17 @@ class Application {
     /**
      * To start up the app server.
      */
-    runServer() {
+    run() {
         return new Promise((resolve, reject) => {
             if (this.port == null || this.port <= 0) {
                 reject('Wrong port number configuration');
                 return;
             }
             this.app.listen(this.port, () => {
+                if (process.env.NODE_ENV == 'development') {
+                    open(`http://localhost:${this.port}`);
+                    log.info(`Application running at http://localhost:${this.port}`);
+                }
                 resolve();
             });
         });
