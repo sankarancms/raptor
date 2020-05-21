@@ -1,5 +1,4 @@
-"use strict"
-const Application = require('./lib/Application');
+import Application from './lib/Application';
 
 // Application initialization.
 const app = new Application();
@@ -9,6 +8,6 @@ let port = getConfig('port');
 app.setPort(process.env.PORT || port);
 
 // Run the app server
-module.exports.run = () => {
+export default function run() {
     return app.run();
 }

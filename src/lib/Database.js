@@ -1,5 +1,4 @@
-"use strict"
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const DatabaseParameters = {
     host: '',
@@ -106,4 +105,4 @@ class DatabaseException extends Error {
     }
 }
 
-exports.Database = Database;
+export default Database;

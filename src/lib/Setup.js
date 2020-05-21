@@ -1,6 +1,12 @@
-"use strict"
-const figlet = require('figlet');
-const { Database } = require('./Database.js');
+import express from 'express';
+import Database from './Database';
+import './index';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import passportFunction from './passport';
+import passport from 'passport';
+
+const Express = express();
 
 /**
  * Setup application.
@@ -8,10 +14,10 @@ const { Database } = require('./Database.js');
 class Setup {
 
     /**
-     * Setup constructor.
-     * @param {*} app express application
+     * Setup constructor
+     * @param {*} app Express application
      */
-    constructor(app) {
+    constructor(app = Express) {
         this.app = app;
         this.init();
     }
@@ -20,21 +26,14 @@ class Setup {
      * Setup initialization.
      */
     init() {
-        require('./index');
+        this.app.use(express.static('public'));
 
-        console.log(figlet.textSync('RAPTOR', {
-            horizontalLayout: 'default',
-            verticalLayout: 'default'
-        }));
+        this.app.use(cors());
+
+        this.app.use(bodyParser.urlencoded({ extended: false }));
+        this.app.use(bodyParser.json());
 
         log.default('Initializing setup');
-
-        // Setting up environment
-        if (getConfig('ENV') == 'development') {
-            process.env.NODE_ENV = 'development';
-        } else {
-            process.env.NODE_ENV = 'production';
-        }
 
         // Database connnection
         global.DB = new Database({
@@ -48,6 +47,9 @@ class Setup {
         DB.connect()
             .then(() => log.success('Database connected'))
             .catch(log.error);
+
+        passportFunction(passport);
+
     }
 
     /**
@@ -55,10 +57,10 @@ class Setup {
      * @param {*} router application router
      */
     router(path = '/', router) {
-        this.app.use(path, router)
+        this.app.use(path, router);
         return this.app;
     }
 }
 
 // Exporting setup class.
-module.exports = Setup;
+export default Setup;

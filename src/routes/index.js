@@ -1,7 +1,13 @@
-const router = require('express').Router();
+import express from 'express';
 
-router.get('/', (req, res, next) => {
-    return res.status(200).json({ success: true, message: 'Application working' });
+import users from '../api/users';
+
+const router = express.Router();
+
+router.get('/test', (req, res, next) => {
+    res.status(200).json({ success: true, message: 'working', data: [] });
 });
 
-module.exports = router;
+router.use('/api/users', users);
+
+export default router;

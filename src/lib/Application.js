@@ -1,9 +1,8 @@
-"use strict"
-const express = require('express');
-const open = require('open');
-const Setup = require('./Setup');
-const router = require('../routes');
+import express from 'express';
+import Setup from './Setup';
+import router from '../routes';
 
+import Renderer from '../helpers/Renderer';
 
 /**
  * Core Application
@@ -26,6 +25,16 @@ class Application {
     init() {
         log.default('Application initializing');
         this.app = this.setup.router('/', router);
+
+        this.app.get('*', (req, res, next) => {
+            Renderer({}, req.path, (err, markUp) => {
+                if (err) {
+                    log.error(err);
+                    return res.status(500).json({ success: false, message: 'Internal Server Error' });
+                }
+                return res.status(200).send(markUp);
+            });
+        });
     }
 
     /**
@@ -47,7 +56,6 @@ class Application {
             }
             this.app.listen(this.port, () => {
                 if (process.env.NODE_ENV == 'development') {
-                    open(`http://localhost:${this.port}`);
                     log.info(`Application running at http://localhost:${this.port}`);
                 }
                 resolve();
@@ -58,4 +66,4 @@ class Application {
 }
 
 // Exporting application.
-module.exports = Application;
+export default Application;

@@ -546,3 +546,4 @@ MigrationBackup/
 config.json
 package-lock.json
 data/
+config.js

@@ -1,7 +1,9 @@
-"use strict"
-const fs = require('fs');
-const os = require('os');
-const chalk = require('chalk');
+import fs from 'fs';
+import os from 'os';
+import chalk from 'chalk';
+import path from 'path';
+import config from '../../config';
+
 
 /**
  * Directory
@@ -26,8 +28,7 @@ global.directory = (path) => {
 global.getConfig = (name, mod = 'core') => {
     if (mod == 'core' && process.env[name.toUpperCase()]) {
         return process.env[name.toUpperCase()];
-    } else if (mod == 'core' && fs.existsSync(__dirname + '/../../config.json')) {
-        const config = require('../../config.json');
+    } else if (mod == 'core') {
         if (config[name.toUpperCase()] != null) {
             return config[name.toUpperCase()];
         }
