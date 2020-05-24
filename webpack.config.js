@@ -10,6 +10,7 @@ const webpackConfig = (entry, name, target, path) => {
             filename: `bundle.${name}.js`
         },
         mode: CONF.ENV,
+        devtool: 'source-map',
         module: {
             rules: [
                 {

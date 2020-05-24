@@ -1,11 +1,10 @@
-import path from 'path';
 import express from 'express';
-import Database from './Database';
 import './constants';
 import './index';
-import '../helpers';
+import '../api/helpers';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import Database from './Database';
 import passportFunction from './passport';
 import passport from 'passport';
 import models from '../api/models';

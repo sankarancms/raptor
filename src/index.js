@@ -1,5 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Router from './api/views/helpers/Router';
+import Client from './api/helpers/Client';
 
-ReactDOM.hydrate(<Router />, document.getElementById("root"));
+ReactDOM.hydrate(<Client />, document.getElementById("root"));
