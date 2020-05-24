@@ -5,6 +5,6 @@ process.on('exit', code => {
     return;
 });
 
-server()
+server.run()
     .then(() => log.success('Application Started'))
     .catch(log.error);

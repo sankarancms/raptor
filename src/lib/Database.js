@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import { Mongoose } from 'mongoose';
 
 const DatabaseParameters = {
     host: '',
@@ -31,8 +31,9 @@ const DatabaseSettings = {
     }
 }
 
-class Database {
+class Database extends Mongoose {
     constructor(databaseParameters = DatabaseParameters) {
+        super()
         this.host = databaseParameters.host;
         this.port = databaseParameters.port;
         this.name = databaseParameters.name;
@@ -49,13 +50,13 @@ class Database {
         return new Promise((resolve, reject) => {
             this.validateConnectionSettings();
             let connectionString = this.getConmectionString();
-            mongoose.connect(connectionString, { user: this.user, pass: this.password, useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
+            super.connect(connectionString, { user: this.user, pass: this.password, useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
                 this.isConnected = true;
                 resolve(); // Database connection estabilished.
             }).catch(err => {
                 throw new DatabaseException(err.message); // Auto reject the promise.
             });
-        })
+        });
     }
 
     validateConnectionSettings() {

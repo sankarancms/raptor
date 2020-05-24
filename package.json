@@ -4,7 +4,7 @@
   "description": "MERN Stack web framework",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./bundle.server.js",
+    "start": "nodemon ./build/bundle.server.js",
     "webpack": "npx webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

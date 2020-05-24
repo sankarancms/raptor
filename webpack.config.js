@@ -1,4 +1,5 @@
 const path = require("path");
+const CONF = require('./config');
 
 const webpackConfig = (entry, name, target, path) => {
     return {
@@ -8,7 +9,7 @@ const webpackConfig = (entry, name, target, path) => {
             path,
             filename: `bundle.${name}.js`
         },
-        mode: "development",
+        mode: CONF.ENV,
         module: {
             rules: [
                 {
@@ -24,12 +25,12 @@ const webpackConfig = (entry, name, target, path) => {
     };
 };
 
-const clientEntry = path.resolve(__dirname, "client", "src", "index.js");
-const clientPath = path.resolve(__dirname, "public");
+const clientEntry = path.resolve(__dirname, "src", "index.js");
+const clientPath = path.resolve(__dirname, "dist");
 const clientConfig = webpackConfig(clientEntry, "main", "web", clientPath);
 
 const serverEntry = path.resolve(__dirname, "index.js");
-const serverPath = __dirname;
+const serverPath = path.resolve(__dirname, "build");
 const serverConfig = webpackConfig(serverEntry, "server", "node", serverPath);
 
 /**

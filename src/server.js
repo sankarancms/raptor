@@ -8,6 +8,4 @@ let port = getConfig('port');
 app.setPort(process.env.PORT || port);
 
 // Run the app server
-export default function run() {
-    return app.run();
-}
+export default app;

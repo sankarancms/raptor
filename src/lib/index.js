@@ -2,7 +2,7 @@ import fs from 'fs';
 import os from 'os';
 import chalk from 'chalk';
 import path from 'path';
-import config from '../../config';
+import glob from 'glob';
 
 
 /**
@@ -11,7 +11,7 @@ import config from '../../config';
  * @returns {string} full path.
  */
 global.directory = (path) => {
-    const homeDirectory = os.homedir();
+    let homeDirectory = os.homedir();
     if (path) {
         homeDirectory += '/' + path;
     }
@@ -26,11 +26,13 @@ global.directory = (path) => {
  * @returns {any} config value.
  */
 global.getConfig = (name, mod = 'core') => {
+    // Global Configs
+    global.CONF = global.CONF || require('../../config');
     if (mod == 'core' && process.env[name.toUpperCase()]) {
         return process.env[name.toUpperCase()];
     } else if (mod == 'core') {
-        if (config[name.toUpperCase()] != null) {
-            return config[name.toUpperCase()];
+        if (CONF[name.toUpperCase()] != null) {
+            return CONF[name.toUpperCase()];
         }
     }
 }
@@ -43,9 +45,6 @@ global.isEmpty = (value) => {
 }
 
 global.trueCasePathSync = (fsPath) => {
-
-    var glob = require('glob')
-    var path = require('path')
 
     // Normalize the path so as to resolve . and .. components.
     // !! As of Node v4.1.1, a path starting with ../ is NOT resolved relative
@@ -124,3 +123,23 @@ global.log = {
         console.log(`[${new Date().toLocaleString()}] ` + chalk.blue(msg));
     }
 };
+
+
+global.getFiles = (directoryPath, callback) => {
+    fs.readdir(directoryPath, (err, files) => {
+        // handling error
+        if (err) {
+            callback(err, null);
+        }
+        // listing all files using forEach
+        callback(null, files);
+    });
+};
+
+global.getJsFiles = (directoryPath, callback) => {
+    glob(directoryPath + "/*.js", callback);
+};
+
+String.prototype.replaceAll = String.prototype.replaceAll || function (search, replace) {
+    return this.split(search).join(replace);
+}
